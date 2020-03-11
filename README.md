@@ -33,4 +33,30 @@ import numpy as np
 
 Q = np.zeros(181,141,3) # (position, velocity, actions)
 ```
-  
+## Initial State
+* Starting position: -0.6 to -0.4
+
+## Goal
+* Reach position: 0.5
+
+## Reward definition
+Here is the key point.  How do we define the reward for Q table to learn over training.
+
+```python
+reward = (Qnew_p - Q_pos) * (Qnew_s - Q_spd)
+```
+* movement = new_Position - old_position
+* change of speed = new_Velocity - old_velocity
+
+|||Position|||Velocity||Reward|
+|--:|--:|--:|--:|--:|--:|--:|--:|
+||Current | New | Movement | Current | New | Change | Reward|
+|Move Left|-0.5|-0.6|-0.1|-0.02|-0.01|0.01|-0.001000|
+|Move Left|-0.7|-0.8| 0.1|-0.04|-0.03|0.01|-0.001000|
+|Move Left| 0.3 |0.2 |-0.1|0.02| 0.03|0.01|-0.001000|
+|Move Right|-0.8|-0.7| 0.1|0.05| 0.06|0.01| 0.001000|
+|Move Right|-1.2|-1.1| 0.1|0.01| 0.02|0.01| 0.001000|
+|Move Right| 0.3| 0.4| 0.1|0.02| 0.01|-0.01| -0.001000|
+
+* Move toward Left gets Negative Reward 
+* Move toward Right gets Positive Reward
